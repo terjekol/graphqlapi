@@ -15,7 +15,7 @@ namespace Api.GraphQL
 
         public GraphQLController(ApplicationDbContext db) => _db = db;
 
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Post([FromBody] GraphQLQuery query)
         {
             var inputs = query.Variables.ToInputs();
