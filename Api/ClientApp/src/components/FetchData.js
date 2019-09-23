@@ -1,20 +1,31 @@
 import React, { Component } from 'react';
+import { useQuery } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
+
+const EXCHANGE_RATES = gql`
+  {
+    author(id: 1) {
+      name
+    }
+  }
+  `;
 
 export class FetchData extends Component {
   static displayName = FetchData.name;
 
-  constructor (props) {
+  constructor(props) {
     super(props);
-    this.state = { forecasts: [], loading: true };
+    const query = useQuery(EXCHANGE_RATES);
+    this.state = { forecasts: [], loading: true, query: query };
 
-    fetch('api/SampleData/WeatherForecasts')
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ forecasts: data, loading: false });
-      });
+    // fetch('api/SampleData/WeatherForecasts')
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     this.setState({ forecasts: data, loading: false });
+    //   });
   }
 
-  static renderForecastsTable (forecasts) {
+  static renderForecastsTable(forecasts) {
     return (
       <table className='table table-striped'>
         <thead>
@@ -39,10 +50,11 @@ export class FetchData extends Component {
     );
   }
 
-  render () {
-    let contents = this.state.loading
-      ? <p><em>Loading...</em></p>
-      : FetchData.renderForecastsTable(this.state.forecasts);
+  render() {
+    let query = this.state.qyery;
+    let contents = query.loading ? <p><em>Loading...</em></p> :
+      query.error ? <p><em>Error...{query.error}</em></p> :
+        <p>data!</p>;
 
     return (
       <div>

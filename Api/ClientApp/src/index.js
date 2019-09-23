@@ -12,17 +12,17 @@ const client = new ApolloClient({
   uri: '/graphql',
 });
 
-client.query({
-  query: gql`
-    {
-      author(id: 1) {
-        name
-      }
-    }
-    `
-})
-  .then(result => console.log(result))
-  .catch(error => console.error(error));
+// client.query({
+//   query: gql`
+//     {
+//       author(id: 1) {
+//         name
+//       }
+//     }
+//     `
+// })
+//   .then(result => console.log(result))
+//   .catch(error => console.error(error));
 
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 const rootElement = document.getElementById('root');
